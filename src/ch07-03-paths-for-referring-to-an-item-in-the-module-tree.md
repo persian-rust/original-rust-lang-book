@@ -108,7 +108,7 @@ access to the `add_to_waitlist` function in the child module, so we mark the
 <Listing number="7-5" file-name="src/lib.rs" caption="Declaring the `hosting` module as `pub` to use it from `eat_at_restaurant`">
 
 ```rust,ignore,does_not_compile
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs}}
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-05/src/lib.rs:here}}
 ```
 
 </Listing>
@@ -143,7 +143,7 @@ keyword before its definition, as in Listing 7-7.
 <Listing number="7-7" file-name="src/lib.rs" caption="Adding the `pub` keyword to `mod hosting` and `fn add_to_waitlist` lets us call the function from `eat_at_restaurant`">
 
 ```rust,noplayground,test_harness
-{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs}}
+{{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-07/src/lib.rs:here}}
 ```
 
 </Listing>
@@ -174,7 +174,7 @@ If you plan on sharing your library crate so other projects can use your code,
 your public API is your contract with users of your crate that determines how
 they can interact with your code. There are many considerations around managing
 changes to your public API to make it easier for people to depend on your
-crate. These considerations are out of the scope of this book; if you’re
+crate. These considerations are beyond the scope of this book; if you’re
 interested in this topic, see [The Rust API Guidelines][api-guidelines].
 
 > #### Best Practices for Packages with a Binary and a Library
@@ -183,8 +183,8 @@ interested in this topic, see [The Rust API Guidelines][api-guidelines].
 > root as well as a _src/lib.rs_ library crate root, and both crates will have
 > the package name by default. Typically, packages with this pattern of
 > containing both a library and a binary crate will have just enough code in the
-> binary crate to start an executable that calls code within the library crate.
-> This lets other projects benefit from most of the functionality that the
+> binary crate to start an executable that calls code defined in the library
+> crate. This lets other projects benefit from the most functionality that the
 > package provides because the library crate’s code can be shared.
 >
 > The module tree should be defined in _src/lib.rs_. Then, any public items can
@@ -195,18 +195,18 @@ interested in this topic, see [The Rust API Guidelines][api-guidelines].
 > client!
 >
 > In [Chapter 12][ch12]<!-- ignore -->, we’ll demonstrate this organizational
-> practice with a command-line program that will contain both a binary crate
+> practice with a command line program that will contain both a binary crate
 > and a library crate.
 
 ### Starting Relative Paths with `super`
 
 We can construct relative paths that begin in the parent module, rather than
 the current module or the crate root, by using `super` at the start of the
-path. This is like starting a filesystem path with the `..` syntax. Using
-`super` allows us to reference an item that we know is in the parent module,
-which can make rearranging the module tree easier when the module is closely
-related to the parent but the parent might be moved elsewhere in the module
-tree someday.
+path. This is like starting a filesystem path with the `..` syntax that means
+to go to the parent directory. Using `super` allows us to reference an item
+that we know is in the parent module, which can make rearranging the module
+tree easier when the module is closely related to the parent but the parent
+might be moved elsewhere in the module tree someday.
 
 Consider the code in Listing 7-8 that models the situation in which a chef
 fixes an incorrect order and personally brings it out to the customer. The
@@ -268,7 +268,7 @@ have such a function, we couldn’t create an instance of `Breakfast` in
 In contrast, if we make an enum public, all of its variants are then public. We
 only need the `pub` before the `enum` keyword, as shown in Listing 7-10.
 
-<Listing number="7-10" file-name="src/lib.rs" caption="Designating an enum as public makes all its variants public">
+<Listing number="7-10" file-name="src/lib.rs" caption="Designating an enum as public makes all its variants public.">
 
 ```rust,noplayground
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-10/src/lib.rs}}

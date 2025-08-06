@@ -37,7 +37,9 @@ overload that operator is listed.
 | `-`                       | `expr - expr`                                           | Arithmetic subtraction                                                | `Sub`          |
 | `-=`                      | `var -= expr`                                           | Arithmetic subtraction and assignment                                 | `SubAssign`    |
 | `->`                      | `fn(...) -> type`, <code>&vert;...&vert; -> type</code> | Function and closure return type                                      |                |
-| `.`                       | `expr.ident`                                            | Member access                                                         |                |
+| `.`                       | `expr.ident`                                            | Field access                                                          |                |
+| `.`                       | `expr.ident(expr, ...)`                                 | Method call                                                           |                |
+| `.`                       | `expr.0`, `expr.1`, etc.                                | Tuple indexing                                                        |                |
 | `..`                      | `..`, `expr..`, `..expr`, `expr..expr`                  | Right-exclusive range literal                                         | `PartialOrd`   |
 | `..=`                     | `..=expr`, `expr..=expr`                                | Right-inclusive range literal                                         | `PartialOrd`   |
 | `..`                      | `..expr`                                                | Struct literal update syntax                                          |                |
@@ -80,19 +82,19 @@ locations.
 
 <span class="caption">Table B-2: Stand-Alone Syntax</span>
 
-| Symbol                                        | Explanation                                                            |
-| --------------------------------------------- | ---------------------------------------------------------------------- |
-| `'ident`                                      | Named lifetime or loop label                                           |
-| `...u8`, `...i32`, `...f64`, `...usize`, etc. | Numeric literal of specific type                                       |
-| `"..."`                                       | String literal                                                         |
-| `r"..."`, `r#"..."#`, `r##"..."##`, etc.      | Raw string literal, escape characters not processed                    |
-| `b"..."`                                      | Byte string literal; constructs an array of bytes instead of a string  |
-| `br"..."`, `br#"..."#`, `br##"..."##`, etc.   | Raw byte string literal, combination of raw and byte string literal    |
-| `'...'`                                       | Character literal                                                      |
-| `b'...'`                                      | ASCII byte literal                                                     |
-| <code>&vert;...&vert; expr</code>             | Closure                                                                |
-| `!`                                           | Always empty bottom type for diverging functions                       |
-| `_`                                           | “Ignored” pattern binding; also used to make integer literals readable |
+| Symbol                                                                 | Explanation                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `'ident`                                                               | Named lifetime or loop label                                           |
+| Digits immediately followed by `u8`, `i32`,  `f64`, `usize`, and so on | Numeric literal of specific type                                       |
+| `"..."`                                                                | String literal                                                         |
+| `r"..."`, `r#"..."#`, `r##"..."##`, etc.                               | Raw string literal, escape characters not processed                    |
+| `b"..."`                                                               | Byte string literal; constructs an array of bytes instead of a string  |
+| `br"..."`, `br#"..."#`, `br##"..."##`, etc.                            | Raw byte string literal, combination of raw and byte string literal    |
+| `'...'`                                                                | Character literal                                                      |
+| `b'...'`                                                               | ASCII byte literal                                                     |
+| <code>&vert;...&vert; expr</code>                                      | Closure                                                                |
+| `!`                                                                    | Always empty bottom type for diverging functions                       |
+| `_`                                                                    | “Ignored” pattern binding; also used to make integer literals readable |
 
 Table B-3 shows symbols that appear in the context of a path through the module
 hierarchy to an item.
@@ -151,8 +153,8 @@ macros and specifying attributes on an item.
 | `#[meta]`                                   | Outer attribute    |
 | `#![meta]`                                  | Inner attribute    |
 | `$ident`                                    | Macro substitution |
-| `$ident:kind`                               | Macro capture      |
-| `$(…)…`                                     | Macro repetition   |
+| `$ident:kind`                               | Macro metavariable |
+| `$(...)...`                                 | Macro repetition   |
 | `ident!(...)`, `ident!{...}`, `ident![...]` | Macro invocation   |
 
 Table B-7 shows symbols that create comments.
@@ -168,9 +170,9 @@ Table B-7 shows symbols that create comments.
 | `/*!...*/` | Inner block doc comment |
 | `/**...*/` | Outer block doc comment |
 
-Table B-8 shows symbols that appear in the context of using tuples.
+Table B-8 shows the contexts in which parentheses are used.
 
-<span class="caption">Table B-8: Tuples</span>
+<span class="caption">Table B-8: Parentheses</span>
 
 | Symbol                   | Explanation                                                                                 |
 | ------------------------ | ------------------------------------------------------------------------------------------- |
@@ -181,7 +183,6 @@ Table B-8 shows symbols that appear in the context of using tuples.
 | `(expr, ...)`            | Tuple expression                                                                            |
 | `(type, ...)`            | Tuple type                                                                                  |
 | `expr(expr, ...)`        | Function call expression; also used to initialize tuple `struct`s and tuple `enum` variants |
-| `expr.0`, `expr.1`, etc. | Tuple indexing                                                                              |
 
 Table B-9 shows the contexts in which curly braces are used.
 
@@ -190,7 +191,7 @@ Table B-9 shows the contexts in which curly braces are used.
 | Context      | Explanation      |
 | ------------ | ---------------- |
 | `{...}`      | Block expression |
-| `Type {...}` | `struct` literal |
+| `Type {...}` | Struct literal   |
 
 Table B-10 shows the contexts in which square brackets are used.
 

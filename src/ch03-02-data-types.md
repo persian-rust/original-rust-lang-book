@@ -50,7 +50,7 @@ the type of an integer value.
 | 32-bit  | `i32`   | `u32`    |
 | 64-bit  | `i64`   | `u64`    |
 | 128-bit | `i128`  | `u128`   |
-| arch    | `isize` | `usize`  |
+| architecture dependent | `isize` | `usize`  |
 
 Each variant can be either signed or unsigned and has an explicit size.
 _Signed_ and _unsigned_ refer to whether it’s possible for the number to be
@@ -62,16 +62,15 @@ when it’s safe to assume the number is positive, it’s shown with no sign.
 Signed numbers are stored using [two’s complement][twos-complement]<!-- ignore
 --> representation.
 
-Each signed variant can store numbers from -(2<sup>n - 1</sup>) to 2<sup>n -
-1</sup> - 1 inclusive, where _n_ is the number of bits that variant uses. So an
-`i8` can store numbers from -(2<sup>7</sup>) to 2<sup>7</sup> - 1, which equals
--128 to 127. Unsigned variants can store numbers from 0 to 2<sup>n</sup> - 1,
-so a `u8` can store numbers from 0 to 2<sup>8</sup> - 1, which equals 0 to 255.
+Each signed variant can store numbers from −(2<sup>n − 1</sup>) to 2<sup>n −
+1</sup> − 1 inclusive, where _n_ is the number of bits that variant uses. So an
+`i8` can store numbers from −(2<sup>7</sup>) to 2<sup>7</sup> − 1, which equals
+−128 to 127. Unsigned variants can store numbers from 0 to 2<sup>n</sup> − 1,
+so a `u8` can store numbers from 0 to 2<sup>8</sup> − 1, which equals 0 to 255.
 
 Additionally, the `isize` and `usize` types depend on the architecture of the
-computer your program is running on, which is denoted in the table as “arch”:
-64 bits if you’re on a 64-bit architecture and 32 bits if you’re on a 32-bit
-architecture.
+computer your program is running on: 64 bits if you’re on a 64-bit architecture
+and 32 bits if you’re on a 32-bit architecture.
 
 You can write integer literals in any of the forms shown in Table 3-2. Note
 that number literals that can be multiple numeric types allow a type suffix,
@@ -120,7 +119,7 @@ some sort of collection.
 >
 > - Wrap in all modes with the `wrapping_*` methods, such as `wrapping_add`.
 > - Return the `None` value if there is overflow with the `checked_*` methods.
-> - Return the value and a boolean indicating whether there was overflow with
+> - Return the value and a Boolean indicating whether there was overflow with
 >   the `overflowing_*` methods.
 > - Saturate at the value’s minimum or maximum values with the `saturating_*`
 >   methods.
@@ -190,10 +189,10 @@ some examples of declaring `char` values:
 
 Note that we specify `char` literals with single quotes, as opposed to string
 literals, which use double quotes. Rust’s `char` type is four bytes in size and
-represents a Unicode Scalar Value, which means it can represent a lot more than
+represents a Unicode scalar value, which means it can represent a lot more than
 just ASCII. Accented letters; Chinese, Japanese, and Korean characters; emoji;
-and zero-width spaces are all valid `char` values in Rust. Unicode Scalar
-Values range from `U+0000` to `U+D7FF` and `U+E000` to `U+10FFFF` inclusive.
+and zero-width spaces are all valid `char` values in Rust. Unicode scalar
+values range from `U+0000` to `U+D7FF` and `U+E000` to `U+10FFFF` inclusive.
 However, a “character” isn’t really a concept in Unicode, so your human
 intuition for what a “character” is may not match up with what a `char` is in
 Rust. We’ll discuss this topic in detail in [“Storing UTF-8 Encoded Text with
@@ -273,11 +272,12 @@ brackets:
 Arrays are useful when you want your data allocated on the stack, the same as
 the other types we have seen so far, rather than the heap (we will discuss the
 stack and the heap more in [Chapter 4][stack-and-heap]<!-- ignore -->) or when
-you want to ensure you always have a fixed number of elements. An array isn’t as
-flexible as the vector type, though. A _vector_ is a similar collection type
-provided by the standard library that _is_ allowed to grow or shrink in size. If
-you’re unsure whether to use an array or a vector, chances are you should use a
-vector. [Chapter 8][vectors]<!-- ignore --> discusses vectors in more detail.
+you want to ensure you always have a fixed number of elements. An array isn’t
+as flexible as the vector type, though. A _vector_ is a similar collection type
+provided by the standard library that _is_ allowed to grow or shrink in size
+because its contents live on the heap. If you’re unsure whether to use an array
+or a vector, chances are you should use a vector. [Chapter 8][vectors]<!--
+ignore --> discusses vectors in more detail.
 
 However, arrays are more useful when you know the number of elements will not
 need to change. For example, if you were using the names of the month in a
